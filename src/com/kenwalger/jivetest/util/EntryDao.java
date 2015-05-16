@@ -8,16 +8,19 @@ import com.kenwalger.jivetest.view.EntryAction;
 
 import java.sql.*;
 
+
 public class EntryDao {
 
-    public static int save(EntryAction r) {
+    public static int saveData(EntryAction r) {
         int status = 0;
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@localhost:3306:xe","system","oracle");
+        Connection connection = null;
 
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO entries VALUES(?,?,?,?,?)");
+        try {
+            String URL = "jdbc:mysql://localhost:3306/jive_ssei_test";
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, "root", "root");
+            String sql = "INSERT INTO entries VALUES(?,?,?,?,?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setLong(1, r.getId());
             ps.setString(2, r.getOS());
             ps.setString(3, r.getOsVersion());

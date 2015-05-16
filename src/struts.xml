@@ -10,7 +10,9 @@
                 <action name="add"
                         class="com.kenwalger.jivetest.view.EntryAction"
                         method="execute">
+                        <result name="input">/entry.jsp</result>
                         <result name="success">/display.jsp</result>
+                        <result name="error">/error.jsp</result>
                 </action>
         </package>
 

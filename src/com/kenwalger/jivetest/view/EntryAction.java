@@ -1,11 +1,12 @@
 package com.kenwalger.jivetest.view;
 
-import com.kenwalger.jivetest.controller.EntryManager;
 import com.kenwalger.jivetest.model.Entry;
-import com.kenwalger.jivetest.util.EntryDao;
 import com.opensymphony.xwork2.ActionSupport;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 /**
@@ -23,25 +24,46 @@ public class EntryAction extends ActionSupport {
 
     private Date created;
 
-    private EntryManager entryManager;
-
-    public EntryAction() {
-        entryManager = new EntryManager();
-    }
 
     public String execute() {
-        this.entryList = entryManager.list();
-        System.out.println("execute called");
-        return SUCCESS;
+        String ret = SUCCESS;
+        Connection connection = null;
+
+        try {
+            String URL = "jdbc:mysql://localhost:3306/jive_ssei_test/entries";
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, "root", "root");
+            String sql = "INSERT INTO entries (OS, osVersion, notes, created) VALUES(?,?,?, CURRENT_TIMESTAMP)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, getOS());
+            ps.setString(2, getOsVersion());
+            ps.setString(3, getNotes());
+
+            ps.executeUpdate();
+
+            ret = SUCCESS;
+
+        } catch (Exception e) {
+            ret = ERROR;
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    ret = ERROR;
+                }
+            }
+        }
+        return ret;
     }
 
-    public String add() {
-        int i= EntryDao.save(this);
-        if(i>0) {
-            this.entryList = entryManager.list();
-            return SUCCESS;
+    public void validate() {
+        if (OS == null || OS.trim().equals("")) {
+            addFieldError("OS", "The OS is required.");
         }
-        return ERROR;
+        if (osVersion == null || osVersion.trim().equals("")) {
+            addFieldError("osVersion", "The OS Version is required.");
+        }
     }
 
     public Entry getEntry() {
@@ -89,5 +111,4 @@ public class EntryAction extends ActionSupport {
     public void setCreated(Date created) {
         this.created = created;
     }
-
 }

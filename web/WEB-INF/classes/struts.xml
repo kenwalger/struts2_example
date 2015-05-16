@@ -5,20 +5,15 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-        <!--<constant name="struts.enable.DynamicMethodInvocation" value="false">-->
-        <!--<constant name="struts.devMode" value="false">-->
-
-        <package name="default" extends="struts-default" namespace="/">
-
-                <action name="add" class="com.kenwalger.jivetest.view.EntryAction" method="add">
-                        <result name="success">display.jsp</result>
-                        <!--<result name="input" type="chain">index</result>-->
-                </action>
-
-                <action name="index" class="com.kenwalger.jivetest.view.EntryAction">
-                        <result name="success">index.jsp</result>
+        <constant name="struts.devMode" value="true" />
+        <package name="test" extends="struts-default" namespace="/">
+                <action name="add"
+                        class="com.kenwalger.jivetest.view.EntryAction"
+                        method="execute">
+                        <result name="input">/entry.jsp</result>
+                        <result name="success">/display.jsp</result>
+                        <result name="error">/error.jsp</result>
                 </action>
         </package>
-        <!--</constant>-->
-        <!--</constant>-->
+
 </struts>

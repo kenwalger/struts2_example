@@ -33,21 +33,18 @@
                 <div class="columns large-8 large-offset-2">
                         <br>
                     <h3>Enter Data</h3>
-                    <%--<s:actionerror>--%>
                         <s:form action="add" method="POST">
-                           <s:textfield name="test.OS" label="OS" size="30"/>
-                           <s:textfield name="test.osVersion" label="OS Version" size="30"/>
-                           <s:textfield name="test.notes" label="Notes" size="150"/>
+                           <s:textfield name="OS" label="OS" size="30"/>
+                           <s:textfield name="osVersion" label="OS Version" size="30"/>
+                           <s:textfield name="notes" label="Notes" size="150"/>
                            <s:submit value="Save" class="small round button" align="center"/>
-
                         </s:form>
-                    <%--</s:actionerror>--%>
                 </div>
             </div>
         </div>
         <footer class="row">
             <div class="columns large-12 text-center">
-                <p>(C) Ken W. Alger - <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) %></p>
+                <p>&COPY; Ken W. Alger - <%= new java.text.SimpleDateFormat("yyyy").format(new java.util.Date()) %></p>
             </div>
         </footer>
     </body>
