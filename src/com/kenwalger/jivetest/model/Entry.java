@@ -12,10 +12,8 @@ import java.sql.Date;
 @Table(name="Entries")
 public class Entry implements Serializable{
 
-    private static final long serialVersionUID = -8767337896773261247L;
-
     private Long id;
-    private String OS;
+    private String os;
     private String osVersion;
     private String notes;
 
@@ -28,8 +26,8 @@ public class Entry implements Serializable{
         return id;
     }
     @Column(name="OS")
-    public String getOS() {
-        return OS;
+    public String getOs() {
+        return os;
     }
     @Column(name="osVersion")
     public String getOsVersion(){
@@ -39,12 +37,16 @@ public class Entry implements Serializable{
     public Date getCreated() {
         return created;
     }
+    @Column(name="notes")
+    public String getNotes() {
+        return notes;
+    }
 
     public void setId(Long id) {
         this.id = id;
     }
-    public void setOS(String OS) {
-        this.OS = OS;
+    public void setOs(String os) {
+        this.os = os;
     }
     public void setOsVersion(String osVersion) {
         this.osVersion = osVersion;
@@ -55,6 +57,5 @@ public class Entry implements Serializable{
     public void setCreated(Date created) {
         this.created = created;
     }
-
 
 }

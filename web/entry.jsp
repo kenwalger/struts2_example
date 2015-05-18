@@ -34,7 +34,7 @@
                         <br>
                     <h3>Enter Data</h3>
                         <s:form action="add" method="POST">
-                           <s:textfield name="OS" label="OS" size="30"/>
+                           <s:textfield name="OS" label="Operating System (OS)" size="30"/>
                            <s:textfield name="osVersion" label="OS Version" size="30"/>
                            <s:textfield name="notes" label="Notes" size="150"/>
                            <s:submit value="Save" class="small round button" align="center"/>

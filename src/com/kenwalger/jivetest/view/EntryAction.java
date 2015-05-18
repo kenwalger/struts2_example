@@ -3,10 +3,8 @@ package com.kenwalger.jivetest.view;
 import com.kenwalger.jivetest.model.Entry;
 import com.opensymphony.xwork2.ActionSupport;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,28 +19,64 @@ public class EntryAction extends ActionSupport {
     private String OS;
     private String osVersion;
     private String notes;
-
     private Date created;
 
+    private List<String> entries;
+
+    /**
+     *  Constants for database connection settings
+     * */
+
+    private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/jive_ssei_test";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
+
+
+    /**
+    * Executes the data input transaction
+    * */
 
     public String execute() {
         String ret = SUCCESS;
+
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException e){
+            System.err.println("Exception : Add MySQL JDBC Driver in your classpath");
+            System.err.println(e.getMessage());
+            ret = ERROR;
+        }
+
+        System.out.println("MySQL JDBC Drive Registered!");
         Connection connection = null;
 
         try {
-            String URL = "jdbc:mysql://localhost:3306/jive_ssei_test/entries";
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(URL, "root", "root");
+            connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+        } catch (SQLException e) {
+            System.err.println("Connection Failed! Check console.");
+            System.err.println(e.getMessage());
+            ret = ERROR;
+        }
+
+        if (connection == null) {
+            System.out.println("Connection Failed!");
+        } else {
+            System.out.println("Connection established!");
+        }
+
+        try {
             String sql = "INSERT INTO entries (OS, osVersion, notes, created) VALUES(?,?,?, CURRENT_TIMESTAMP)";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, getOS());
-            ps.setString(2, getOsVersion());
-            ps.setString(3, getNotes());
+            if (connection != null) {
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, getOs());
+                ps.setString(2, getOsVersion());
+                ps.setString(3, getNotes());
 
-            ps.executeUpdate();
+                ps.executeUpdate();
 
-            ret = SUCCESS;
-
+                ret = SUCCESS;
+            }
         } catch (Exception e) {
             ret = ERROR;
         } finally {
@@ -57,6 +91,11 @@ public class EntryAction extends ActionSupport {
         return ret;
     }
 
+    /**
+     * Form validation.
+     * */
+
+
     public void validate() {
         if (OS == null || OS.trim().equals("")) {
             addFieldError("OS", "The OS is required.");
@@ -65,6 +104,11 @@ public class EntryAction extends ActionSupport {
             addFieldError("osVersion", "The OS Version is required.");
         }
     }
+
+    /**
+     * Getters and Setters
+     * */
+
 
     public Entry getEntry() {
         return entry;
@@ -85,7 +129,7 @@ public class EntryAction extends ActionSupport {
     public Long getId() {
         return id;
     }
-    public String getOS() {
+    public String getOs() {
         return OS;
     }
     public String getOsVersion(){
@@ -110,5 +154,13 @@ public class EntryAction extends ActionSupport {
     }
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public List<String> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(List<String> entries) {
+        this.entries = entries;
     }
 }
