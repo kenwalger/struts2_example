@@ -33,6 +33,7 @@ public class EntryAction extends ActionSupport {
     private static final String DB_PASSWORD = "root";
 
 
+
     /**
     * Executes the data input transaction
     * */
@@ -72,8 +73,9 @@ public class EntryAction extends ActionSupport {
                 ps.setString(1, getOs());
                 ps.setString(2, getOsVersion());
                 ps.setString(3, getNotes());
-
                 ps.executeUpdate();
+
+                entryList = new ArrayList<>();
 
                 ret = SUCCESS;
             }

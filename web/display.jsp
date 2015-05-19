@@ -31,54 +31,66 @@
       <div class="columns large-12">
         <div class="columns large-8 large-offset-2">
           <br>
-          <h3>Enter Data</h3>
+          <h3>Data Entered</h3>
             <div>
-              <table>
+              <table border="1" cellspacing="0" cellpadding="3">
                 <tbody>
                   <tr>
-                    <th>Operating System (OS)</th>
-                    <th>OS Version</th>
-                    <th>Notes</th>
+                    <th class="text-center">Operating System (OS)</th>
+                    <th class="text-center">OS Version</th>
+                    <th class="text-center">Notes</th>
                   </tr>
-                  <%--&lt;%&ndash;<s:iterator value="entries" var="entry">&ndash;%&gt;--%>
+                  <s:iterator value="entryList" var="entry">
                     <tr>
-                      <td><s:property value="os"/></td>
+                      <td><s:property value="OS"/></td>
                       <td><s:property value="osVersion"/></td>
                       <td><s:property value="notes"/></td>
                     </tr>
-                  <%--&lt;%&ndash;</s:iterator>&ndash;%&gt;--%>
-                  <%--<%--%>
-                  <%--try--%>
-                    <%--{--%>
-                      <%--Class.forName("com.mysql.jdbc.Driver");--%>
-                      <%--String url = "jdbc:mysql://localhost:3306/jive_ssei_test";--%>
-                      <%--String username = "root";--%>
-                      <%--String password = "root";--%>
-                      <%--String query = "SELECT * FROM entries";--%>
-                      <%--Connection connection = DriverManager.getConnection(url, username, password);--%>
-                      <%--Statement statement = connection.createStatement();--%>
-                      <%--ResultSet resultSet = statement.executeQuery(query);--%>
-                      <%--while(resultSet.next()) {--%>
-                  <%--%>--%>
-                        <%--<tr>--%>
-                          <%--<td><%resultSet.getString("OS"); %></td>--%>
-                          <%--<td><%resultSet.getString("osVersion"); %></td>--%>
-                          <%--<td><%resultSet.getString("notes"); %></td>--%>
-                        <%--</tr>--%>
-                      <%--<%--%>
-                    <%--}--%>
-                  <%--%>--%>
-                </tbody>
+                  </s:iterator>
+
+                <%-- Try to force the data w/o Struts --%>
+                      <%
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+String url= "jdbc:mysql://localhost:3306/jive_ssei_test";
+String username="root";
+String password="root";
+String query="select * from entries";
+Connection conn=DriverManager.getConnection(url,username,password);
+Statement stmt=conn.createStatement();
+ResultSet rs=stmt.executeQuery(query);
+while(rs.next())
+{
+
+%>
+                  <tr>
+                      <td><%= rs.getString("OS") %></td>
+                      <td><%= rs.getString("osVersion") %></td>
+                      <td><%= rs.getString("Notes") %></td>
+                  </tr>
+                      <%
+
+}
+%>
+                  </tbody>
               </table>
-                <%--<%--%>
-                      <%--resultSet.close();--%>
-                      <%--statement.close();--%>
-                      <%--connection.close();--%>
-                      <%--}--%>
-                  <%--catch(Exception e) {--%>
-                    <%--e.printStackTrace();--%>
-                  <%--}--%>
-                <%--%>--%>
+                <%
+                        rs.close();
+                        stmt.close();
+                        conn.close();
+                    }
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
+
+
+                %>
+                <%--</tbody>--%>
+              <%--</table>--%>
               <div class="columns large-8 push-4">
                 <s:a href="entry.jsp" class="small round button">Enter Additional Data</s:a>
               </div>

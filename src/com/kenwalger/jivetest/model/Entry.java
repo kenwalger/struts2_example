@@ -3,6 +3,7 @@ package com.kenwalger.jivetest.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by Ken on 5/14/2015.
@@ -18,6 +19,11 @@ public class Entry implements Serializable{
     private String notes;
 
     private Date created;
+
+    private Entry entry;
+    private List<Entry> entryList;
+
+
 
     @Id
     @GeneratedValue
@@ -58,4 +64,20 @@ public class Entry implements Serializable{
         this.created = created;
     }
 
+
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
+    }
+
+    public List<Entry> getEntryList() {
+        return entryList;
+    }
+
+    public void setEntryList(List<Entry> entryList) {
+        this.entryList = entryList;
+    }
 }
