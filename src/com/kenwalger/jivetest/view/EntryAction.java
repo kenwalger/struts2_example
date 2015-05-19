@@ -23,6 +23,7 @@ public class EntryAction extends ActionSupport {
 
     private List<String> entries;
 
+
     /**
      *  Constants for database connection settings
      * */
@@ -31,7 +32,6 @@ public class EntryAction extends ActionSupport {
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/jive_ssei_test";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
-
 
 
     /**
@@ -75,7 +75,7 @@ public class EntryAction extends ActionSupport {
                 ps.setString(3, getNotes());
                 ps.executeUpdate();
 
-                entryList = new ArrayList<>();
+
 
                 ret = SUCCESS;
             }
@@ -93,10 +93,10 @@ public class EntryAction extends ActionSupport {
         return ret;
     }
 
+
     /**
      * Form validation.
      * */
-
 
     public void validate() {
         if (OS == null || OS.trim().equals("")) {
@@ -107,10 +107,10 @@ public class EntryAction extends ActionSupport {
         }
     }
 
+
     /**
      * Getters and Setters
      * */
-
 
     public Entry getEntry() {
         return entry;
@@ -164,5 +164,60 @@ public class EntryAction extends ActionSupport {
 
     public void setEntries(List<String> entries) {
         this.entries = entries;
+    }
+
+
+    /**
+     * Get all of the database entries
+     * */
+
+    public ArrayList<Entry> getAllEntries() {
+        ArrayList<Entry> entries = new ArrayList<>();
+        Entry entry;
+
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException e){
+            System.err.println("Exception : Add MySQL JDBC Driver in your classpath");
+            System.err.println(e.getMessage());
+        }
+
+        System.out.println("MySQL JDBC Drive Registered!");
+        Connection connection = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+        } catch (SQLException e) {
+            System.err.println("Connection Failed! Check console.");
+            System.err.println(e.getMessage());
+        }
+        if (connection == null) {
+            System.out.println("Connection Failed!");
+        } else {
+            System.out.println("Connection established!");
+        }
+
+        try {
+            String sql = "SELECT * FROM entries";
+            if (connection != null) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+
+                while(resultSet.next()) {
+
+                    entry = new Entry();
+                    entry.setOs(resultSet.getString("OS"));
+                    entry.setOsVersion(resultSet.getString("osVersion"));
+                    entry.setNotes(resultSet.getString("notes"));
+
+                    entries.add(entry);
+                }
+
+                resultSet.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return entries;
     }
 }
