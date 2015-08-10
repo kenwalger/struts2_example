@@ -1,6 +1,6 @@
-package com.kenwalger.jivetest.view;
+package com.kenwalger.sseitest.view;
 
-import com.kenwalger.jivetest.model.Entry;
+import com.kenwalger.sseitest.model.Entry;
 import com.opensymphony.xwork2.ActionSupport;
 
 import java.sql.*;
@@ -29,7 +29,7 @@ public class EntryAction extends ActionSupport {
      * */
 
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/jive_ssei_test";
+    private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/ssei_test";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 

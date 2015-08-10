@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/foundation.min.css">
     <script src="js/vendor/modernizr.js"></script>
-    <title>Ken W. Alger | Jive Software Interview Test</title>
+    <title>Test | Display</title>
   </head>
   <body>
     <%@include file="includes/header.html"%>

@@ -1,4 +1,4 @@
-package com.kenwalger.jivetest.model;
+package com.kenwalger.sseitest.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

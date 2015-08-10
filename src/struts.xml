@@ -8,7 +8,7 @@
         <constant name="struts.devMode" value="true" />
         <package name="test" extends="struts-default" namespace="/">
                 <action name="add"
-                        class="com.kenwalger.jivetest.view.EntryAction"
+                        class="com.kenwalger.sseitest.view.EntryAction"
                         method="execute">
                         <result name="input">/entry.jsp</result>
                         <result name="success">/display.jsp</result>
