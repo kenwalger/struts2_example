@@ -9,7 +9,7 @@
 ######Configuration of MySQL Server
 1. Run the contents of the `script.sql` query, either from the attached file or from the Script below, in MySQL administration.
 2. This will create a database called `ssei_test` and a table called `entries`.
-3. The MySQL database has the default username of "**root**" and password or "**root**".
+3. The MySQL database has the default username of "**root**" and password of "**root**".
 
 ######Installation of WAR file
 1. Stop Tomcat.
