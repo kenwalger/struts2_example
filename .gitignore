@@ -1,5 +1,5 @@
-/.idea
-Installation-Configuration.pdf
+.gitignore
+.idea
 Jive_SSEI_Test.iml
 Jive_SSEI_Test.zip
 Jive_SSEI_Test_war.war
